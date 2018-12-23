@@ -17,7 +17,8 @@ import org.quartz.impl.StdSchedulerFactory;
 public class HelloScheduler {
     public static void main(String[] args) throws SchedulerException {
         // 创建 jobDeatil 实例，绑定 HelloJob
-        JobDetail jobDetail = JobBuilder.newJob(HelloJob.class).withIdentity("myJob", "group1").build();
+        JobDetail jobDetail = JobBuilder.newJob(HelloJob.class).withIdentity("myJob", "group1")
+                .usingJobData("message", "my job message").usingJobData("floatJobValue", 3.14159F).build();
 
         System.out.println("JobDetail's name is: " + jobDetail.getKey().getName());
         System.out.println("JobDetail's group is: " + jobDetail.getKey().getGroup());
@@ -25,7 +26,8 @@ public class HelloScheduler {
 
         // 创建 Trigger 实例，定义频率
         Trigger trigger = TriggerBuilder.newTrigger().withIdentity("myTrigger", "group1").startNow()
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(2).repeatForever()).build();
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(2).repeatForever())
+                .usingJobData("message", "my trigger message").usingJobData("doubleTriggerValue", 3.1D).build();
 
         // 创建 scheduler 实例
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
