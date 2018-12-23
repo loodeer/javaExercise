@@ -14,7 +14,7 @@ import org.quartz.impl.StdSchedulerFactory;
  * @author loodeer
  * @date 2018-12-24 01:21
  */
-public class HelloScheduler {
+public class HelloSimpleScheduler {
     public static void main(String[] args) throws SchedulerException {
 
         DateTime now = new DateTime();
