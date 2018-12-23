@@ -46,6 +46,10 @@ public class HelloJob implements Job {
         System.out.println("message is:" + message);
         System.out.println("JobFloatValue is:" + floatJobValue);
         System.out.println("triggerDoubleValue is:" + doubleTriggerValue);
+
+        System.out.println("-----------");
+        System.out.println("Start Time is:" + jobExecutionContext.getTrigger().getStartTime());
+        System.out.println("End Time is:" + jobExecutionContext.getTrigger().getEndTime());
     }
 
     public String getMessage() {
