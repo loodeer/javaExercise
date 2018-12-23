@@ -15,6 +15,12 @@ import org.quartz.TriggerKey;
  */
 public class HelloJob implements Job {
 
+    private String message;
+
+    private Float floatJobValue;
+
+    private Double doubleTriggerValue;
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         DateTime now = new DateTime();
@@ -35,5 +41,34 @@ public class HelloJob implements Job {
         System.out.println("triggerMsg is:" + triggerJobDateMap.getString("message"));
         System.out.println("triggerDoubleValue is: " + triggerJobDateMap.getDouble("doubleTriggerValue"));
 
+        System.out.println("第二种获取方式");
+        // 同名变量，trigger 里设置的优先级高，会覆盖 jobDetail 的
+        System.out.println("message is:" + message);
+        System.out.println("JobFloatValue is:" + floatJobValue);
+        System.out.println("triggerDoubleValue is:" + doubleTriggerValue);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Float getFloatJobValue() {
+        return floatJobValue;
+    }
+
+    public void setFloatJobValue(Float floatJobValue) {
+        this.floatJobValue = floatJobValue;
+    }
+
+    public Double getDoubleTriggerValue() {
+        return doubleTriggerValue;
+    }
+
+    public void setDoubleTriggerValue(Double doubleTriggerValue) {
+        this.doubleTriggerValue = doubleTriggerValue;
     }
 }
