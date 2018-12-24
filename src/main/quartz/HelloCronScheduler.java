@@ -60,5 +60,11 @@ public class HelloCronScheduler {
         current exec time is: 2018-12-24 12:43:52
         current exec time is: 2018-12-24 12:43:53
          */
+
+        // 等待任务执行完成之后，再关闭 scheduler
+        scheduler.shutdown(true);
+        System.out.println("scheduler has shut down ?" + scheduler.isShutdown());
+        // 直接关闭 scheduler，未完成的任务也会继续执行完成
+        scheduler.shutdown();
     }
 }
