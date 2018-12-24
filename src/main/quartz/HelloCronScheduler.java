@@ -1,4 +1,4 @@
-import org.joda.time.DateTime;
+        import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.quartz.CronScheduleBuilder;
@@ -15,7 +15,7 @@ import org.quartz.impl.StdSchedulerFactory;
  * @date 2018-12-24 02:15
  */
 public class HelloCronScheduler {
-    public static void main(String[] args) throws SchedulerException {
+    public static void main(String[] args) throws SchedulerException, InterruptedException {
         DateTime now = new DateTime();
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -30,7 +30,35 @@ public class HelloCronScheduler {
 
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.scheduleJob(jobDetail, trigger);
+
         scheduler.start();
         System.out.println("current time is: " + now.toString(dateTimeFormatter));
+
+        Thread.sleep(3000L);
+        // scheduler 挂起
+        scheduler.standby();
+
+        Thread.sleep(5000L);
+        // scheduler 重新启动, standby 之后少执行的,会追加执行,如下
+        scheduler.start();
+        /*
+        current time is: 2018-12-24 12:43:38
+        current exec time is: 2018-12-24 12:43:38
+        current exec time is: 2018-12-24 12:43:39
+        current exec time is: 2018-12-24 12:43:40
+        current exec time is: 2018-12-24 12:43:41
+        current exec time is: 2018-12-24 12:43:46
+        current exec time is: 2018-12-24 12:43:46
+        current exec time is: 2018-12-24 12:43:46
+        current exec time is: 2018-12-24 12:43:46
+        current exec time is: 2018-12-24 12:43:46
+        current exec time is: 2018-12-24 12:43:47
+        current exec time is: 2018-12-24 12:43:48
+        current exec time is: 2018-12-24 12:43:49
+        current exec time is: 2018-12-24 12:43:50
+        current exec time is: 2018-12-24 12:43:51
+        current exec time is: 2018-12-24 12:43:52
+        current exec time is: 2018-12-24 12:43:53
+         */
     }
 }
