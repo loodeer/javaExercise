@@ -53,7 +53,7 @@ resources 目录下增加 logback.xml 文件，内容如下:
 -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager 
 -server 
 -Xms3g # 初始堆大小为 3g
--Xmx3g # 最大允许堆大小为 3g
+-Xmx3g # 最大允许堆大小为 3g ，两个值推荐设置成一样
 -Xmn512m 
 -XX:PermSize=128m 
 -XX:MaxPermSize=128m 
@@ -80,3 +80,7 @@ resources 目录下增加 logback.xml 文件，内容如下:
 -Dcatalina.home=/opt/tomcat7 
 -Djava.io.tmpdir=/opt/tomcat7/temp org.apache.catalina.startup.Bootstrap start
 ```
+
+### spring
+
+类内能使用资源注解的前提是类以 bean 形式配置。
