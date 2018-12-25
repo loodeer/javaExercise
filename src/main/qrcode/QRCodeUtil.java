@@ -1,10 +1,14 @@
 import com.swetake.util.Qrcode;
+import jp.sourceforge.qrcode.QRCodeDecoder;
+import jp.sourceforge.qrcode.data.QRCodeImage;
+import jp.sourceforge.qrcode.exception.DecodingFailedException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author loodeer
@@ -43,8 +47,8 @@ public class QRCodeUtil {
             }
         }
 
-        // 中间的 logo
-//        Image img = ImageIO.read(new File(""));
+        // 中间的 logo, 这段有点问题 TODO
+//        Image img = ImageIO.read(new File("src/main/iqrcode/logo.png"));
 //        g.drawImage(img, 25,55,60,50, null);
 
         // 释放此图形的上下文一级它使用的所有系统资源。调用 dispose 之后就不能再使用 Graphics 对象
@@ -54,4 +58,52 @@ public class QRCodeUtil {
         ImageIO.write(bi, "png", destFile);
         System.out.println("Inout Encode data is: " + encodeData);
     }
+
+    /**
+     * 解析二维码，返回解析内容
+     *
+     * @param imageFile
+     * @return
+     */
+    public static String qrCodeDecode(File imageFile) {
+        String decodedData = null;
+        QRCodeDecoder decoder = new QRCodeDecoder();
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(imageFile);
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try {
+            decodedData = new String(decoder.decode(new J2SEImage(image)), "GBK");
+            //              System.out.println("Output Decoded Data is：" + decodedData);
+        } catch (DecodingFailedException dfe) {
+            System.out.println("Error: " + dfe.getMessage());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decodedData;
+    }
+
+    static class J2SEImage implements QRCodeImage {
+        BufferedImage image;
+
+        public J2SEImage(BufferedImage image) {
+            this.image = image;
+        }
+
+        @Override public int getWidth() {
+            return image.getWidth();
+        }
+
+        @Override public int getHeight() {
+            return image.getHeight();
+        }
+
+        @Override public int getPixel(int x, int y) {
+            return image.getRGB(x, y);
+        }
+    }
+
 }
