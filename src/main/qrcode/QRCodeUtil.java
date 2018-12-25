@@ -24,7 +24,7 @@ public class QRCodeUtil {
         // 设置 Qrcode 包的版本
         qrcode.setQrcodeVersion(7);
 
-        byte[] d = encodeData.getBytes("GBK");
+        byte[] d = encodeData.getBytes("UTF-8");
         BufferedImage bi = new BufferedImage(139, 139, BufferedImage.TYPE_INT_RGB);
 
         // 创建图层
@@ -76,7 +76,7 @@ public class QRCodeUtil {
         }
 
         try {
-            decodedData = new String(decoder.decode(new J2SEImage(image)), "GBK");
+            decodedData = new String(decoder.decode(new J2SEImage(image)), "UTF-8");
             //              System.out.println("Output Decoded Data is：" + decodedData);
         } catch (DecodingFailedException dfe) {
             System.out.println("Error: " + dfe.getMessage());
