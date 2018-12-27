@@ -34,7 +34,7 @@ public class HttpClientExample {
     }
 
     private void sendGet() throws IOException {
-        String url = "http://localhost:8090/user/get?id=2";
+        String url = "http://127.0.0.1:8090/user/get?id=2";
 
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(url);
@@ -57,7 +57,7 @@ public class HttpClientExample {
     }
 
     private void sendPost() throws IOException {
-        String url = "http://localhost:8090/user/register";
+        String url = "http://127.0.0.1:8090/user/register";
 
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost(url);
