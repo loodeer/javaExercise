@@ -1,10 +1,8 @@
-import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -50,6 +48,7 @@ public class HttpURLConnectionExample {
         System.out.println(response.toString());
     }
 
+
     private void sendPost() throws IOException {
         String url = "http://localhost:8090/user/register";
 
@@ -61,7 +60,7 @@ public class HttpURLConnectionExample {
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         con.setDoOutput(true);
 
-        String urlParameters = "telphone=13334567890&otpCode=8888";
+        String urlParameters = "telphone=13334567890&otpCode=8888&name=xxx&gender=1&age=1&password=123456";
 
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(urlParameters);

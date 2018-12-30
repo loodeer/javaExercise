@@ -1,17 +1,14 @@
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author loodeer
@@ -64,11 +61,13 @@ public class HttpClientExample {
 
         post.setHeader("User-Agent", USER_AGENT);
 
-        List<NameValuePair> urlParameters = new ArrayList<>();
-        urlParameters.add(new BasicNameValuePair("telphone", "13334567890"));
-        urlParameters.add(new BasicNameValuePair("otpCode", "8888"));
+        //        List<NameValuePair> urlParameters = new ArrayList<>();
+        //        urlParameters.add(new BasicNameValuePair("telphone", "13334567890"));
+        //        urlParameters.add(new BasicNameValuePair("otpCode", "8888"));
+        //        post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
-        post.setEntity(new UrlEncodedFormEntity(urlParameters));
+        // 以 application/json 形式 post
+        post.setEntity(new StringEntity("{\"sn\":\"C02G8416DRJM\"}", ContentType.APPLICATION_JSON));
 
         HttpResponse response = client.execute(post);
         System.out.println("\nSending 'POST' request to URL : " + url);
@@ -77,7 +76,7 @@ public class HttpClientExample {
 
         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         String line = "";
         while ((line = rd.readLine()) != null) {
             result.append(line);
