@@ -70,7 +70,10 @@
             <version>3.4.13</version>
             <type>pom</type>
         </dependency>
-
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
 
 
     </dependencies>
